@@ -1,5 +1,6 @@
 name: Spplice Package
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
   package:
@@ -8,18 +9,22 @@ jobs:
       # checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
+
       # install dependencies
       - name: Setup python
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install vpk
+
       # create package
       - name: Build package
         run: bash run package
+
       # publish artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
